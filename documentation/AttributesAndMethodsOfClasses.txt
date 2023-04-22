@@ -1,0 +1,50 @@
+(The existence of the Manager object is questionable)
+Manager
+Attributes: int FPS, int t1, int frame, string isMenuRun, bool isGameRoundRun
+Methods: start(), startMenu(), startGameRound(), 
+
+Menu
+Attributes: string state, vector<Button> buttons, vector<SDL_Texture> chosenSkins, vector<SDL_Texture> chosenWeapons
+Methods: run(), close(), handleEvents(), draw(), drawButtons() getChosenSkins(), getChosenWeapons(), 
+
+Button
+Attributes: int x, int y, int width, int height, string state, SDL_Texture texture, string text
+Methods: draw()
+
+GameRound
+Attributes: string state, int wave, int numberZombieWave, int cameraX
+Methods: run(), pause(), close(), handleEvents()
+cameraX - the X coordinate of the camera. It depends on which part of the map is drawn
+
+Map
+Attributes: vector<vector<int>> clouds, vector<int> tree, 
+Methods: draw(), drawClouds(), createCloud(), drawTree(), drawEarth(), 
+
+Entity
+Attributes: int x, int y, int width, int height, SDL_Texture texture, int health, int maxHealth, int speed, 
+Methods: draw(), go(), die(), getDamage(), getHealth(), getX(), getY()
+
+Player (inherit from Entity)
+Attributes: Weapon weapon, int dy, string state
+Methods: override draw(), shoot(), getHelp(), jump(), 
+
+Zombie (inherit from Entity)
+Attributes: string state
+Methods: attack()
+
+ShootingZombie (inherit from Zombie)
+Attributes: 
+Methods: attack()
+
+Weapon
+Attributes: int x, int y, int width, int height, string state, SDL_Texture texture, int clip, int maxClip, int ammunition, 
+int maxAmmunition, int reloadTime, SDL_Texture fireTexture
+Methods: draw(), reload(), shoot()
+
+Cartridge
+Attributes: int x, int y, int width, int height, int speed, SDL_Texture texture
+Methods: draw(), go()
+
+HelpBox
+Attributes: int x, int y, int width, int height, string state, SDL_Texture texture, int dx, int dy
+Methods: draw(), fly(), del()

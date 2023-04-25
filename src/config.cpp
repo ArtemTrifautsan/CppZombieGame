@@ -1,15 +1,18 @@
-#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <iostream>
 #include "config.h"
 
 const int SCREEN_WIDTH = 540;
 const int SCREEN_HEIGHT = 360;
 
-bool init(SDL_Window* window, SDL_Renderer* renderer)
+SDL_Window* window = nullptr;
+SDL_Renderer* renderer = nullptr;
+
+int init()
 {
     // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         std::cout << "SDL could not initialize! SDL_Error:\n" << SDL_GetError() << "\n";
         //printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -27,7 +30,7 @@ bool init(SDL_Window* window, SDL_Renderer* renderer)
 
     //Create a window
     window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (window == NULL)
+    if (window == nullptr)
     {
         std::cout << "Window could not be created! SDL_Error:\n" << SDL_GetError() << "\n";
         //printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -36,7 +39,7 @@ bool init(SDL_Window* window, SDL_Renderer* renderer)
 
     // Create a renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (renderer == NULL)
+    if (renderer == nullptr)
     {
         std::cout << "Renderer could not be created! SDL_Error:\n" << SDL_GetError() << "\n";
         //printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -47,13 +50,13 @@ bool init(SDL_Window* window, SDL_Renderer* renderer)
 
 }
 
-void close(SDL_Window* window, SDL_Renderer* renderer)
+void close()
 {
     //Destroy renderer and window
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    renderer = nullptr;
-    window = nullptr;
+    renderer = NULL;
+    window = NULL;
 
     //Quit SDL subsystems
     IMG_Quit();

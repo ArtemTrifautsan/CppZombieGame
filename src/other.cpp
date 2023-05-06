@@ -1,11 +1,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <string>
+
 #include "other.h"
 
-SDL_Texture* loadTexture(SDL_Renderer* renderer, char* path)
+SDL_Texture* loadTexture(SDL_Renderer* renderer, std::string path)
 {
     SDL_Texture* texture = nullptr;
-    texture = IMG_LoadTexture(renderer, path);
+    texture = IMG_LoadTexture(renderer, path.c_str());
     return texture;
 }
 

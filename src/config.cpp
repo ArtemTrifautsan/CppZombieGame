@@ -3,8 +3,8 @@
 #include <iostream>
 #include "config.h"
 
-const int SCREEN_WIDTH = 540;
-const int SCREEN_HEIGHT = 360;
+const int SCREEN_WIDTH = 1200;
+const int SCREEN_HEIGHT = 750;
 
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;

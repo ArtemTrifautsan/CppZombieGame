@@ -1,45 +1,52 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
-#include "config.h"
+#include <string>
 
-void mainLoop(SDL_Renderer* renderer);
+#include "config.h"
+#include "other.h"
+#include "MenuLogic/menu.h"
+
+void mainLoop();
+void tickFPS(Timer timer, int FPS);
 
 int main(int argv, char** args)
 {
     init();
-    mainLoop(renderer);
+    mainLoop();
     close();
     return 0;
 }
 
-void mainLoop(SDL_Renderer* renderer)
+void mainLoop()
 {
+    Timer timer;
+    timer.start();
+
+    Menu menu(renderer);
+
     bool runningGame = true;
     while (runningGame)
     {
-        SDL_Delay(1000);
-        std::cout << renderer << std::endl;
-        std::cout << &renderer << std::endl;
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
+        // Menu processing
+        std::string menuState = menu.getState();
+        if (menuState == "run") menu.run();
+        else if (menuState == "close")
         {
-            if (event.type == SDL_QUIT) runningGame = false;
-            else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) runningGame = false;
-
-            else if (event.type == SDL_KEYDOWN)
-            {
-                if (event.key.keysym.sym == SDLK_a) std::cout << "A is pressed\n";
-            }
+            // This is where the game round will start
         }
+        else if (menuState == "quit") runningGame = false;
 
-        SDL_SetRenderDrawColor(renderer, 0x467, 0xf14, 0xaa4, 0x00);
-        SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-        SDL_Rect rect1 = { 10, 10, 50, 50 };
-        SDL_RenderFillRect(renderer, &rect1);
-
-        SDL_RenderPresent(renderer);
+        tickFPS(timer, 60);
     }
+}
+
+void tickFPS(Timer timer, int FPS)
+{
+    if (timer.getCurrentTime() < (1000 / FPS))
+    {
+        timer.sleep(1000 / FPS - timer.getCurrentTime());
+        timer.start();
+    }
+    else timer.start();
 }

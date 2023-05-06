@@ -5,7 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-SDL_Texture* loadTexture(SDL_Renderer* renderer, char* path);
+SDL_Texture* loadTexture(SDL_Renderer* renderer, std::string path);
 void drawTexture(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, SDL_RendererFlip flip, float resize);
 
 class Timer {
